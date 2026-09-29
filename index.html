@@ -1,0 +1,1486 @@
+<div id="ftdApp">
+
+<style>
+#ftdApp{
+  --bg:#0b1220;
+  --card:#111a2b;
+  --card2:#172238;
+  --line:#263653;
+  --text:#f5f7fb;
+  --muted:#91a0b8;
+  --green:#18d68a;
+  --red:#ff5570;
+  --blue:#4da3ff;
+  font-family:Arial,Helvetica,sans-serif;
+  max-width:900px;
+  margin:15px auto;
+  color:var(--text);
+  box-sizing:border-box;
+}
+
+#ftdApp *{
+  box-sizing:border-box;
+}
+
+.ftd-head{
+  background:linear-gradient(135deg,#111b2e,#0d1525);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.ftd-title{
+  font-size:22px;
+  font-weight:800;
+  margin:0 0 5px;
+}
+
+.ftd-sub{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.ftd-form{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.ftd-field label{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin:0 0 5px;
+}
+
+.ftd-field input,
+.ftd-field select{
+  width:100%;
+  height:42px;
+  border:1px solid var(--line);
+  background:#0b1322;
+  color:#fff;
+  border-radius:10px;
+  padding:0 11px;
+  outline:none;
+}
+
+.ftd-field input:focus,
+.ftd-field select:focus{
+  border-color:var(--blue);
+}
+
+.ftd-actions{
+  grid-column:1/-1;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.ftd-btn{
+  border:0;
+  border-radius:10px;
+  min-height:42px;
+  padding:0 16px;
+  cursor:pointer;
+  font-weight:800;
+  color:#fff;
+  background:#253653;
+}
+
+.ftd-add{
+  background:var(--green);
+  color:#06130e;
+}
+
+.ftd-refresh{
+  background:#245fa0;
+}
+
+.ftd-btn:active,
+.ftd-small:active{
+  transform:scale(.97);
+}
+
+.ftd-summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.ftd-stat{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+}
+
+.ftd-stat small{
+  color:var(--muted);
+  display:block;
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.ftd-stat strong{
+  font-size:19px;
+}
+
+.ftd-empty{
+  text-align:center;
+  padding:35px 15px;
+  border:1px dashed var(--line);
+  border-radius:15px;
+  color:var(--muted);
+}
+
+.ftd-trade{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:12px;
+  overflow:hidden;
+}
+
+.ftd-trade-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.ftd-exchange{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:3px;
+}
+
+.ftd-symbol{
+  font-size:19px;
+  font-weight:900;
+}
+
+.ftd-side{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.ftd-long{
+  color:#062016;
+  background:var(--green);
+}
+
+.ftd-short{
+  color:#25060c;
+  background:var(--red);
+}
+
+.ftd-price{
+  background:#0a1220;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:13px;
+  margin-bottom:10px;
+}
+
+.ftd-price-label{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.ftd-price-value{
+  font-size:27px;
+  font-weight:900;
+  margin-top:3px;
+}
+
+.ftd-price-time{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+
+.ftd-pnl{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-bottom:10px;
+}
+
+.ftd-box{
+  background:var(--card2);
+  border-radius:11px;
+  padding:11px;
+}
+
+.ftd-box small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:4px;
+}
+
+.ftd-box strong{
+  font-size:17px;
+}
+
+.ftd-positive{
+  color:var(--green)!important;
+}
+
+.ftd-negative{
+  color:var(--red)!important;
+}
+
+.ftd-details{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-bottom:11px;
+}
+
+.ftd-detail{
+  background:#0b1322;
+  border-radius:9px;
+  padding:9px;
+}
+
+.ftd-detail span{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.ftd-detail b{
+  display:block;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.ftd-trade-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.ftd-small{
+  min-height:36px;
+  padding:0 12px;
+  border:0;
+  border-radius:9px;
+  background:#263653;
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.ftd-danger{
+  background:#572333;
+}
+
+.ftd-pnl-btn{
+  background:#315b96;
+}
+
+
+/* =========================
+   PNL POPUP
+========================= */
+
+#ftdPopupOverlay{
+  display:none;
+  position:fixed;
+  z-index:999999999;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.78);
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+#ftdPopupOverlay.ftd-popup-show{
+  display:flex;
+}
+
+#ftdPopupBox{
+  width:100%;
+  max-width:400px;
+  max-height:92vh;
+  overflow:auto;
+  position:relative;
+  animation:ftdPopupIn .25s ease;
+}
+
+@keyframes ftdPopupIn{
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(.94);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+#ftdPopupClose{
+  position:absolute;
+  right:10px;
+  top:10px;
+  z-index:10;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:#263653;
+  color:#fff;
+  font-size:22px;
+  line-height:34px;
+  text-align:center;
+  cursor:pointer;
+}
+
+#ftdPopupContent{
+  width:100%;
+}
+
+#ftdPopupContent .ftd-screenshot{
+  display:block!important;
+  margin:0;
+}
+
+
+/* =========================
+   SCREENSHOT STYLE CARD
+========================= */
+
+.ftd-screenshot{
+  width:100%;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(145deg,#0d1728,#18263e);
+  border:1px solid #405579;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.ftd-shot-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+  padding-right:35px;
+}
+
+.ftd-shot-brand{
+  font-weight:900;
+  font-size:15px;
+}
+
+.ftd-shot-status{
+  font-size:10px;
+  color:var(--green);
+}
+
+.ftd-shot-pnl{
+  text-align:center;
+  padding:10px 0 20px;
+}
+
+.ftd-shot-pnl small{
+  color:var(--muted);
+  display:block;
+  margin-bottom:7px;
+  font-size:10px;
+  letter-spacing:.5px;
+}
+
+.ftd-shot-pnl b{
+  font-size:36px;
+  display:block;
+}
+
+.ftd-shot-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.ftd-shot-item{
+  background:rgba(255,255,255,.05);
+  border-radius:10px;
+  padding:11px;
+}
+
+.ftd-shot-item span{
+  color:var(--muted);
+  display:block;
+  font-size:9px;
+}
+
+.ftd-shot-item b{
+  display:block;
+  margin-top:4px;
+  font-size:12px;
+}
+
+.ftd-note{
+  color:var(--muted);
+  font-size:9px;
+  text-align:center;
+  margin-top:14px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  #ftdApp{
+    margin:8px auto;
+  }
+
+  .ftd-form{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .ftd-summary{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  .ftd-details{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:430px){
+
+  .ftd-form{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .ftd-summary{
+    grid-template-columns:1fr;
+  }
+
+  .ftd-pnl{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .ftd-title{
+    font-size:19px;
+  }
+
+  #ftdPopupOverlay{
+    padding:10px;
+  }
+
+  .ftd-screenshot{
+    padding:17px;
+  }
+
+}
+</style>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="ftd-head">
+
+  <div class="ftd-title">
+    Futures Trade Dashboard
+  </div>
+
+  <div class="ftd-sub">
+    Live Price • PnL • ROI • Multiple Exchanges
+  </div>
+
+</div>
+
+
+<!-- =========================
+     TRADE INPUT FORM
+========================= -->
+
+<div class="ftd-form">
+
+  <div class="ftd-field">
+    <label>Exchange</label>
+
+    <select id="ftdExchange">
+
+      <option value="binance">
+        Binance Futures
+      </option>
+
+      <option value="bybit">
+        Bybit
+      </option>
+
+      <option value="bitget">
+        Bitget
+      </option>
+
+      <option value="okx">
+        OKX
+      </option>
+
+    </select>
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Coin / Pair</label>
+
+    <input
+      id="ftdPair"
+      value="BTCUSDT"
+      placeholder="BTCUSDT"
+    >
+
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Side</label>
+
+    <select id="ftdSide">
+
+      <option value="LONG">
+        LONG
+      </option>
+
+      <option value="SHORT">
+        SHORT
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Leverage</label>
+
+    <input
+      id="ftdLev"
+      type="number"
+      value="10"
+      min="1"
+      step="1"
+    >
+
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Margin USDT</label>
+
+    <input
+      id="ftdMargin"
+      type="number"
+      value="100"
+      min="0"
+      step="0.01"
+    >
+
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Entry Price</label>
+
+    <input
+      id="ftdEntry"
+      type="number"
+      placeholder="65000"
+      step="any"
+    >
+
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Take Profit</label>
+
+    <input
+      id="ftdTP"
+      type="number"
+      placeholder="68000"
+      step="any"
+    >
+
+  </div>
+
+
+  <div class="ftd-field">
+
+    <label>Stop Loss</label>
+
+    <input
+      id="ftdSL"
+      type="number"
+      placeholder="63000"
+      step="any"
+    >
+
+  </div>
+
+
+  <div class="ftd-actions">
+
+    <button
+      type="button"
+      class="ftd-btn ftd-add"
+      id="ftdAdd"
+    >
+      + ADD TRADE
+    </button>
+
+
+    <button
+      type="button"
+      class="ftd-btn ftd-refresh"
+      id="ftdRefresh"
+    >
+      ↻ REFRESH PRICES
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     SUMMARY
+========================= -->
+
+<div class="ftd-summary">
+
+  <div class="ftd-stat">
+
+    <small>
+      OPEN TRADES
+    </small>
+
+    <strong id="ftdCount">
+      0
+    </strong>
+
+  </div>
+
+
+  <div class="ftd-stat">
+
+    <small>
+      TOTAL PNL
+    </small>
+
+    <strong id="ftdTotal">
+      0.00 USDT
+    </strong>
+
+  </div>
+
+
+  <div class="ftd-stat">
+
+    <small>
+      STATUS
+    </small>
+
+    <strong id="ftdStatus">
+      Ready
+    </strong>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     TRADE LIST
+========================= -->
+
+<div id="ftdList">
+
+  <div class="ftd-empty">
+    Add your first trade above.
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PNL POPUP
+========================= -->
+
+<div id="ftdPopupOverlay">
+
+  <div id="ftdPopupBox">
+
+    <button
+      type="button"
+      id="ftdPopupClose"
+    >
+      ×
+    </button>
+
+    <div id="ftdPopupContent"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+(function(){
+
+  var root = document.getElementById("ftdApp");
+
+  if(!root){
+    return;
+  }
+
+
+  var STORAGE_KEY =
+    "ftd_blogger_trades_v3";
+
+
+  var trades = [];
+
+
+  function $(id){
+    return root.querySelector(id);
+  }
+
+
+  function safeNumber(value){
+
+    var n = parseFloat(value);
+
+    return isFinite(n) ? n : 0;
+
+  }
+
+
+  function escapeHTML(value){
+
+    return String(
+      value == null ? "" : value
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+  }
+
+
+  function save(){
+
+    try{
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(trades)
+      );
+
+    }catch(e){}
+
+  }
+
+
+  function load(){
+
+    try{
+
+      var data =
+        localStorage.getItem(STORAGE_KEY);
+
+      if(data){
+
+        var parsed =
+          JSON.parse(data);
+
+        if(Array.isArray(parsed)){
+
+          trades = parsed;
+
+        }
+
+      }
+
+    }catch(e){
+
+      trades = [];
+
+    }
+
+  }
+
+
+  function normalizeSymbol(symbol){
+
+    symbol = String(symbol || "")
+      .toUpperCase()
+      .replace(/\s/g,"")
+      .replace("/","")
+      .replace("-","");
+
+    if(symbol.indexOf("USDT") === -1){
+
+      symbol = symbol + "USDT";
+
+    }
+
+    return symbol;
+
+  }
+
+
+  function displaySymbol(symbol){
+
+    return normalizeSymbol(symbol);
+
+  }
+
+
+  function formatPrice(n){
+
+    if(
+      !isFinite(n) ||
+      n === null ||
+      n === 0
+    ){
+
+      return "--";
+
+    }
+
+
+    if(n >= 1000){
+
+      return n.toLocaleString(
+        "en-US",
+        {
+          minimumFractionDigits:2,
+          maximumFractionDigits:2
+        }
+      );
+
+    }
+
+
+    if(n >= 1){
+
+      return n.toFixed(4);
+
+    }
+
+
+    return n.toFixed(6);
+
+  }
+
+
+  function formatMoney(n){
+
+    if(!isFinite(n)){
+
+      n = 0;
+
+    }
+
+    return n.toFixed(2);
+
+  }
+
+
+  function calculate(trade){
+
+    var price =
+      safeNumber(trade.price);
+
+    var entry =
+      safeNumber(trade.entry);
+
+    var margin =
+      safeNumber(trade.margin);
+
+    var leverage =
+      safeNumber(trade.leverage);
+
+
+    if(
+      price <= 0 ||
+      entry <= 0 ||
+      margin <= 0 ||
+      leverage <= 0
+    ){
+
+      return {
+        pnl:0,
+        roi:0,
+        valid:false
+      };
+
+    }
+
+
+    var positionValue =
+      margin * leverage;
+
+
+    var quantity =
+      positionValue / entry;
+
+
+    var pnl;
+
+
+    if(trade.side === "LONG"){
+
+      pnl =
+        quantity * (price - entry);
+
+    }else{
+
+      pnl =
+        quantity * (entry - price);
+
+    }
+
+
+    var roi =
+      (pnl / margin) * 100;
+
+
+    return {
+
+      pnl:pnl,
+
+      roi:roi,
+
+      quantity:quantity,
+
+      positionValue:positionValue,
+
+      valid:true
+
+    };
+
+  }
+
+
+  function render(){
+
+    var list =
+      $("#ftdList");
+
+
+    var total = 0;
+
+
+    if(trades.length === 0){
+
+      list.innerHTML =
+        '<div class="ftd-empty">' +
+        'Add your first trade above.' +
+        '</div>';
+
+
+      $("#ftdCount").textContent =
+        "0";
+
+
+      $("#ftdTotal").textContent =
+        "0.00 USDT";
+
+
+      return;
+
+    }
+
+
+    var html = "";
+
+
+    for(
+      var i=0;
+      i<trades.length;
+      i++
+    ){
+
+      var t = trades[i];
+
+      var c =
+        calculate(t);
+
+
+      total += c.pnl;
+
+
+      var pnlClass =
+        c.pnl >= 0
+        ? "ftd-positive"
+        : "ftd-negative";
+
+
+      var sideClass =
+        t.side === "LONG"
+        ? "ftd-long"
+        : "ftd-short";
+
+
+      var pnlText =
+        (c.pnl >= 0 ? "+" : "") +
+        formatMoney(c.pnl);
+
+
+      var roiText =
+        (c.roi >= 0 ? "+" : "") +
+        c.roi.toFixed(2) +
+        "%";
+
+
+      html +=
+
+      '<div class="ftd-trade" data-id="' +
+      escapeHTML(t.id) +
+      '">' +
+
+
+        '<div class="ftd-trade-top">' +
+
+          '<div>' +
+
+            '<div class="ftd-exchange">' +
+              escapeHTML(
+                t.exchangeName
+              ) +
+            '</div>' +
+
+            '<div class="ftd-symbol">' +
+              escapeHTML(
+                displaySymbol(t.pair)
+              ) +
+            '</div>' +
+
+          '</div>' +
+
+
+          '<span class="ftd-side ' +
+          sideClass +
+          '">' +
+
+            escapeHTML(t.side) +
+
+          '</span>' +
+
+        '</div>' +
+
+
+        '<div class="ftd-price">' +
+
+          '<div class="ftd-price-label">' +
+            'LIVE MARKET PRICE' +
+          '</div>' +
+
+          '<div class="ftd-price-value">' +
+            formatPrice(t.price) +
+          '</div>' +
+
+          '<div class="ftd-price-time">' +
+
+            (
+              t.updated
+              ? "Updated " +
+                escapeHTML(t.updated)
+              : "Waiting for price..."
+            ) +
+
+          '</div>' +
+
+        '</div>' +
+
+
+        '<div class="ftd-pnl">' +
+
+          '<div class="ftd-box">' +
+
+            '<small>' +
+              'UNREALIZED PNL' +
+            '</small>' +
+
+            '<strong class="' +
+            pnlClass +
+            '">' +
+
+              pnlText +
+              ' USDT' +
+
+            '</strong>' +
+
+          '</div>' +
+
+
+          '<div class="ftd-box">' +
+
+            '<small>ROI</small>' +
+
+            '<strong class="' +
+            pnlClass +
+            '">' +
+
+              roiText +
+
+            '</strong>' +
+
+          '</div>' +
+
+        '</div>' +
+
+
+        '<div class="ftd-details">' +
+
+          '<div class="ftd-detail">' +
+
+            '<span>ENTRY</span>' +
+
+            '<b>' +
+              formatPrice(t.entry) +
+            '</b>' +
+
+          '</div>' +
+
+
+          '<div class="ftd-detail">' +
+
+            '<span>LEVERAGE</span>' +
+
+            '<b>' +
+              escapeHTML(
+                t.leverage
+              ) +
+              'x' +
+            '</b>' +
+
+          '</div>' +
+
+
+          '<div class="ftd-detail">' +
+
+            '<span>MARGIN</span>' +
+
+            '<b>' +
+              formatMoney(t.margin) +
+            '</b>' +
+
+          '</div>' +
+
+
+          '<div class="ftd-detail">' +
+
+            '<span>TP / SL</span>' +
+
+            '<b>' +
+
+              escapeHTML(
+                t.tp || "--"
+              ) +
+
+              ' / ' +
+
+              escapeHTML(
+                t.sl || "--"
+              ) +
+
+            '</b>' +
+
+          '</div>' +
+
+        '</div>' +
+
+
+        '<div class="ftd-trade-actions">' +
+
+          '<button ' +
+          'type="button" ' +
+          'class="ftd-small ftd-pnl-btn" ' +
+          'data-action="pnl">' +
+
+            'PNL CARD' +
+
+          '</button>' +
+
+
+          '<button ' +
+          'type="button" ' +
+          'class="ftd-small" ' +
+          'data-action="copy">' +
+
+            'COPY SUMMARY' +
+
+          '</button>' +
+
+
+          '<button ' +
+          'type="button" ' +
+          'class="ftd-small ftd-danger" ' +
+          'data-action="delete">' +
+
+            'DELETE' +
+
+          '</button>' +
+
+        '</div>' +
+
+      '</div>';
+
+    }
+
+
+    list.innerHTML = html;
+
+
+    $("#ftdCount").textContent =
+      String(trades.length);
+
+
+    $("#ftdTotal").textContent =
+      (total >= 0 ? "+" : "") +
+      formatMoney(total) +
+      " USDT";
+
+
+    $("#ftdTotal").className =
+      total >= 0
+      ? "ftd-positive"
+      : "ftd-negative";
+
+  }
+
+
+  async function getPrice(trade){
+
+    var symbol =
+      normalizeSymbol(
+        trade.pair
+      );
+
+
+    try{
+
+      var url = "";
+
+
+      /* BINANCE */
+
+      if(
+        trade.exchange ===
+        "binance"
+      ){
+
+        url =
+          "https://fapi.binance.com/fapi/v1/ticker/price?symbol=" +
+          encodeURIComponent(symbol);
+
+
+        var r1 =
+          await fetch(url);
+
+
+        var j1 =
+          await r1.json();
+
+
+        if(
+          j1 &&
+          j1.price
+        ){
+
+          return parseFloat(
+            j1.price
+          );
+
+        }
+
+      }
+
+
+      /* BYBIT */
+
+      if(
+        trade.exchange ===
+        "bybit"
+      ){
+
+        url =
+          "https://api.bybit.com/v5/market/tickers?category=linear&symbol=" +
+          encodeURIComponent(symbol);
+
+
+        var r2 =
+          await fetch(url);
+
+
+        var j2 =
+          await r2.json();
+
+
+        if(
+          j2 &&
+          j2.result &&
+          j2.result.list &&
+          j2.result.list[0] &&
+          j2.result.list[0].lastPrice
+        ){
+
+          return parseFloat(
+            j2.result.list[0].lastPrice
+          );
+
+        }
+
+      }
+
+
+      /* BITGET */
+
+      if(
+        trade.exchange ===
+        "bitget"
+      ){
+
+        url =
+          "https://api.bitget.com/api/v2/mix/market/ticker?productType=USDT-FUTURES&symbol=" +
+          encodeURIComponent(symbol);
+
+
+        var r3 =
+          await fetch(url);
+
+
+        var j3 =
+          await r3.json();
+
+
+        if(
+          j3 &&
+          j3.data &&
+          j3.data[0] &&
+          j3.data[0].lastPr
+        ){
+
+          return parseFloat(
+            j3.data[0].lastPr
+          );
+
+        }
+
+      }
+
+
+      /* OKX */
+
+      if(
+        trade.exchange ===
+        "okx"
+      ){
+
+        var okxSymbol =
+          symbol.replace(
+            "USDT",
+            "-USDT-SWAP"
+          );
+
+
+        url =
+          "https://www.okx.com/api/v5/market/ticker?instId=" +
+          encodeURIComponent(
+            okxSymbol
+          );
+
+
+        var r4 =
+          await fetch(url);
+
+
+        var j4 =
+          await r4.json();
+
+
+        if(
+          j4 &&
+          j4.data &&
+          j4.data[0] &&
+          j4.data[0].last
+        ){
+
+          return parseFloat(
+            j4.data[0].last
+          );
+
+        }
+
+      }
+
+
+    }catch(error){
+
+      return null;
+
+    }
+
+
+    return null;
+
+  }
+
+
+  async function refreshPrices(){
+
+    $("#ftdStatus").textContent =
+      "Updating...";
+
+
+    for(
+      var i=0;
+      i<trades.length;
+      i++
+    ){
+
+      var price =
+        await getPrice(
+          trades[i]
+        );
+
+
+      if(
+        price !== null &&
+        isFinite(price)
+ 
