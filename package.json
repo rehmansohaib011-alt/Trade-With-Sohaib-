@@ -1,1 +1,13 @@
-
+{
+  "name": "trade-with-sohaib-binance-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Binance Futures position API for Trade With Sohaib dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
